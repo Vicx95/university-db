@@ -8,3 +8,11 @@ TEST(CheckStructure, CanAddStudentToDb) {
     EXPECT_TRUE(db.add(adam));
     EXPECT_FALSE(db.add(adam));
 }
+
+TEST(DisplayDb, DisplayEmptyDb) {
+    Database db;
+    auto content = db.show();
+    auto expected = "";
+    EXPECT_EQ(content, expected);
+    db.display();
+}
