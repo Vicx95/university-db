@@ -15,6 +15,7 @@ FetchContent_MakeAvailable(googletest)
 
 set(SOURCES 
     src/main.cpp
+    src/Database.cpp
     )
 
 set(HEADERS 
@@ -22,12 +23,14 @@ set(HEADERS
     )
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES})
-set(FLAGS -Wall -Wextra -Werror -Wconversion -Wpedantic -g)
+set(FLAGS -Wall -Wextra -Wconversion -Wpedantic)
 target_compile_options(${PROJECT_NAME} PRIVATE ${FLAGS})
 
 enable_testing()
 set(UT-SOURCES 
     tests/test.cpp
+    src/Database.cpp
+    src/Student.cpp
     )
 
 add_library(${PROJECT_NAME}-lib STATIC ${SOURCES})
