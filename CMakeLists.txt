@@ -16,6 +16,7 @@ FetchContent_MakeAvailable(googletest)
 set(SOURCES 
     src/main.cpp
     src/Database.cpp
+    src/Student.cpp
     )
 
 set(HEADERS 
