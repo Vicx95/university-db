@@ -3,6 +3,8 @@
 
 enum class Gender { Male, Female };
 
+std::string convertGenderToString(const Gender& gender);
+
 class Student {
  public:
   Student(std::string name,
