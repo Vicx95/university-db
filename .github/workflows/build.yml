@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 
 jobs:
-  file_synchronizer:
+  university-db:
     runs-on: ubuntu-latest
     steps:
     - name: Check out code
