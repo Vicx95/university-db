@@ -44,6 +44,17 @@ ErrorCode Database::searchByPesel(const std::string& pesel) {
   return ErrorCode::RecordNotFound;
 }
 
+void Database::sortByPesel() {
+  std::sort(students_.begin(), students_.end(),
+            [](const auto& lhs, const auto& rhs) {
+              return std::stoul(lhs.getPesel()) < std::stoul(rhs.getPesel());
+            });
+}
+
+std::vector<Student> Database::getData() const {
+  return students_;
+}
+
 bool Database::isStudentExist(const Student& student) {
   return std::find(students_.begin(), students_.end(), student) !=
                  students_.end()

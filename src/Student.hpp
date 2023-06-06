@@ -17,7 +17,7 @@ class Student {
   std::string getLastName() const;
   std::string getPesel() const;
 
-  bool operator==(const Student& other);
+  bool operator==(const Student& other) const;
 
  private:
   std::string name_;

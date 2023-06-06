@@ -63,4 +63,17 @@ TEST_F(DatabaseTest, SearchByPeselTest) {
   EXPECT_EQ(ErrorCode::RecordNotFound, db.searchByPesel("11223344111"));
 }
 
-TEST_F(DatabaseTest, SortingByPeselTest) {}
+TEST_F(DatabaseTest, SortingByPeselTest) {
+  std::vector<Student> expectedOutput{
+      {"Beata", "Kowalska", "ul.Gwiazdzista 24, 10-200, Warszawa", 444,
+       "11223344564", Gender::Female},
+      {"Adam", "Kowalski", "ul. Dobra 134, 00-200 Warszawa", 123456,
+       "11223344567", Gender::Male},
+      {"Konrad", "Berek", "ul.Norweska 50, 55-600, Wroclaw", 9876,
+       "11245344564", Gender::Male},
+      {"Iwona", "Syntezator", "ul.Krakowska 30, 55-500, Wroclaw", 9873,
+       "76345344564", Gender::Female}};
+  db.sortByPesel();
+  auto data = db.getData();
+  ASSERT_EQ(data, expectedOutput);
+}

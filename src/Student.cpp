@@ -27,8 +27,10 @@ std::string Student::getPesel() const {
   return pesel_;
 }
 
-bool Student::operator==(const Student& other) {
-  return pesel_ == other.pesel_;
+bool Student::operator==(const Student& other) const {
+  return name_ == other.name_ && lastName_ == other.lastName_ &&
+         address_ == other.address_ && indexNumber_ == other.indexNumber_ &&
+         pesel_ == other.pesel_ && gender_ == other.gender_;
 }
 
 std::string convertGenderToString(const Gender& gender) {
