@@ -77,3 +77,18 @@ TEST_F(DatabaseTest, SortingByPeselTest) {
   auto data = db.getData();
   ASSERT_EQ(data, expectedOutput);
 }
+
+TEST_F(DatabaseTest, SortingByLastName) {
+  std::vector<Student> expectedOutput{
+      {"Konrad", "Berek", "ul.Norweska 50, 55-600, Wroclaw", 9876,
+       "11245344564", Gender::Male},
+      {"Beata", "Kowalska", "ul.Gwiazdzista 24, 10-200, Warszawa", 444,
+       "11223344564", Gender::Female},
+      {"Adam", "Kowalski", "ul. Dobra 134, 00-200 Warszawa", 123456,
+       "11223344567", Gender::Male},
+      {"Iwona", "Syntezator", "ul.Krakowska 30, 55-500, Wroclaw", 9873,
+       "76345344564", Gender::Female}};
+  db.sortByLastName();
+  auto data = db.getData();
+  ASSERT_EQ(data, expectedOutput);
+}

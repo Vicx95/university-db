@@ -51,6 +51,13 @@ void Database::sortByPesel() {
             });
 }
 
+void Database::sortByLastName() {
+  std::sort(students_.begin(), students_.end(),
+            [](const auto& lhs, const auto& rhs) {
+              return lhs.getLastName() < rhs.getLastName();
+            });
+}
+
 std::vector<Student> Database::getData() const {
   return students_;
 }

@@ -18,6 +18,7 @@ class Database {
   ErrorCode searchByLastName(const std::string& lastName);
   ErrorCode searchByPesel(const std::string& pesel);
   void sortByPesel();
+  void sortByLastName();
   std::vector<Student> getData() const;
 
  private:
