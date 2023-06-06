@@ -19,8 +19,12 @@ std::string Student::show() const {
          convertGenderToString(gender_);
 }
 
+std::string Student::getLastName() const {
+  return lastName_;
+}
+
 bool Student::operator==(const Student& other) {
-    return pesel_ == other.pesel_;
+  return pesel_ == other.pesel_;
 }
 
 std::string convertGenderToString(const Gender& gender) {

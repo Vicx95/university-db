@@ -22,6 +22,17 @@ std::string Database::show() const {
   return result;
 }
 
+ErrorCode Database::searchByLastName(const std::string& lastName) {
+  auto searchResult = std::find_if(
+      students_.cbegin(), students_.cend(),
+      [&lastName](const auto& el) { return lastName == el.getLastName(); });
+  if (searchResult != students_.cend()) {
+    std::cout << searchResult->show() << '\n';
+    return ErrorCode::RecordFound;
+  }
+  return ErrorCode::RecordNotFound;
+}
+
 bool Database::isStudentExist(const Student& student) {
   return std::find(students_.begin(), students_.end(), student) !=
                  students_.end()

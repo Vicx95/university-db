@@ -29,7 +29,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE ${FLAGS})
 
 enable_testing()
 set(UT-SOURCES 
-    tests/test.cpp
+    tests/DatabaseTest.cpp
     src/Database.cpp
     src/Student.cpp
     )

@@ -14,8 +14,10 @@ class Student {
           std::string pesel,
           Gender gender);
   std::string show() const;
-  
+  std::string getLastName() const;
+
   bool operator==(const Student& other);
+
  private:
   std::string name_;
   std::string lastName_;

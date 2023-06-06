@@ -37,3 +37,14 @@ TEST_F(DatabaseTest, AddOnlyNonDuplicatedStudentToDb) {
   EXPECT_EQ(ErrorCode::Success, db.add(adam));
   EXPECT_EQ(ErrorCode::StudentAlreadyExist, db.add(adam));
 }
+
+TEST_F(DatabaseTest, SearchBySurnameTest) {
+  Student adam{"Adam", "Kowalski",    "ul. Dobra 134, 00-200 Warszawa",
+               123456, "11223344567", Gender::Male};
+  Student beata{"Beata", "Kowalska",    "ul.Gwiazdzista 24, 10-200, Warszawa",
+                444,     "11223344564", Gender::Female};
+  db.add(adam);
+  db.add(beata);
+  EXPECT_EQ(ErrorCode::RecordFound, db.searchByLastName("Kowalska"));
+  EXPECT_EQ(ErrorCode::RecordNotFound, db.searchByLastName("Nowak"));
+}

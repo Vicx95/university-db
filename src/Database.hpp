@@ -5,7 +5,9 @@
 
 enum class ErrorCode {
   Success,
-  StudentAlreadyExist
+  StudentAlreadyExist,
+  RecordFound,
+  RecordNotFound
 };
 
 class Database {
@@ -13,6 +15,7 @@ class Database {
   ErrorCode add(const Student& s);
   void display() const;
   std::string show() const;
+  ErrorCode searchByLastName(const std::string& lastName);
 
  private:
   bool isStudentExist(const Student& student);
