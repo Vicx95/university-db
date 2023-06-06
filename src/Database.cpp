@@ -1,8 +1,13 @@
 #include "Database.hpp"
 #include <iostream>
+#include <ranges>
 
-void Database::add(const Student& s) {
-  students_.push_back(s);
+ErrorCode Database::add(const Student& s) {
+  if (!isStudentExist(s)) {
+    students_.push_back(s);
+    return ErrorCode::Success;
+  }
+  return ErrorCode::StudentAlreadyExist;
 }
 
 void Database::display() const {
@@ -15,4 +20,11 @@ std::string Database::show() const {
     result += student.show();
   }
   return result;
+}
+
+bool Database::isStudentExist(const Student& student) {
+  return std::find(students_.begin(), students_.end(), student) !=
+                 students_.end()
+             ? true
+             : false;
 }

@@ -28,3 +28,12 @@ TEST_F(DatabaseTest, DisplayNonEmptyDb) {
       "Female";
   EXPECT_EQ(content, expected);
 }
+
+TEST_F(DatabaseTest, AddOnlyNonDuplicatedStudentToDb) {
+  Student adam{"Adam", "Kowalski",    "ul. Dobra 134, 00-200 Warszawa",
+               123456, "11223344567", Gender::Male};
+  Student beata{"Beata", "Kowalska",    "ul.Gwiazdzista 24, 10-200, Warszawa",
+                444,     "11223344564", Gender::Female};
+  EXPECT_EQ(ErrorCode::Success, db.add(adam));
+  EXPECT_EQ(ErrorCode::StudentAlreadyExist, db.add(adam));
+}

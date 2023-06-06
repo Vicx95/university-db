@@ -15,6 +15,6 @@ Requirements:
 5. Searching by PESEL number
 6. Sorting by PESEL number
 7. Sorting by last name
-8. Deleteing by index number
+8. Deleting by index number
 9. Validation whether the PESEL number is correct'
 10. Loading from a file and saving the entire database to a file

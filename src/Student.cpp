@@ -19,6 +19,10 @@ std::string Student::show() const {
          convertGenderToString(gender_);
 }
 
+bool Student::operator==(const Student& other) {
+    return pesel_ == other.pesel_;
+}
+
 std::string convertGenderToString(const Gender& gender) {
   switch (gender) {
     case Gender::Male:
