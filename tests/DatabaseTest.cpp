@@ -10,9 +10,15 @@ struct DatabaseTest : ::testing::Test {
                  123456, "11223344567", Gender::Male};
     Student beata{"Beata", "Kowalska",    "ul.Gwiazdzista 24, 10-200, Warszawa",
                   444,     "11223344564", Gender::Female};
+    Student konrad{"Konrad", "Berek",       "ul.Norweska 50, 55-600, Wroclaw",
+                   9876,     "11245344564", Gender::Male};
+    Student iwona{"Iwona", "Syntezator",  "ul.Krakowska 30, 55-500, Wroclaw",
+                  9873,    "76345344564", Gender::Female};
 
     db.add(adam);
     db.add(beata);
+    db.add(konrad);
+    db.add(iwona);
   }
 };
 
@@ -30,6 +36,12 @@ TEST_F(DatabaseTest, DisplayNonEmptyDb) {
       "Male";
   expected +=
       "Beata Kowalska; ul.Gwiazdzista 24, 10-200, Warszawa; 444; 11223344564; "
+      "Female";
+  expected +=
+      "Konrad Berek; ul.Norweska 50, 55-600, Wroclaw; 9876; 11245344564; "
+      "Male";
+  expected +=
+      "Iwona Syntezator; ul.Krakowska 30, 55-500, Wroclaw; 9873; 76345344564; "
       "Female";
   EXPECT_EQ(content, expected);
 }
@@ -50,3 +62,5 @@ TEST_F(DatabaseTest, SearchByPeselTest) {
   EXPECT_EQ(ErrorCode::RecordFound, db.searchByPesel("11223344567"));
   EXPECT_EQ(ErrorCode::RecordNotFound, db.searchByPesel("11223344111"));
 }
+
+TEST_F(DatabaseTest, SortingByPeselTest) {}
