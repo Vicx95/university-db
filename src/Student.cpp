@@ -23,6 +23,10 @@ std::string Student::getLastName() const {
   return lastName_;
 }
 
+std::string Student::getPesel() const {
+  return pesel_;
+}
+
 bool Student::operator==(const Student& other) {
   return pesel_ == other.pesel_;
 }

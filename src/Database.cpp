@@ -33,6 +33,17 @@ ErrorCode Database::searchByLastName(const std::string& lastName) {
   return ErrorCode::RecordNotFound;
 }
 
+ErrorCode Database::searchByPesel(const std::string& pesel) {
+  auto searchResult =
+      std::find_if(students_.cbegin(), students_.cend(),
+                   [&pesel](const auto& el) { return pesel == el.getPesel(); });
+  if (searchResult != students_.cend()) {
+    std::cout << searchResult->show() << '\n';
+    return ErrorCode::RecordFound;
+  }
+  return ErrorCode::RecordNotFound;
+}
+
 bool Database::isStudentExist(const Student& student) {
   return std::find(students_.begin(), students_.end(), student) !=
                  students_.end()

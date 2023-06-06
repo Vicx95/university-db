@@ -48,3 +48,14 @@ TEST_F(DatabaseTest, SearchBySurnameTest) {
   EXPECT_EQ(ErrorCode::RecordFound, db.searchByLastName("Kowalska"));
   EXPECT_EQ(ErrorCode::RecordNotFound, db.searchByLastName("Nowak"));
 }
+
+TEST_F(DatabaseTest, SearchByPeselTest) {
+  Student adam{"Adam", "Kowalski",    "ul. Dobra 134, 00-200 Warszawa",
+               123456, "11223344567", Gender::Male};
+  Student beata{"Beata", "Kowalska",    "ul.Gwiazdzista 24, 10-200, Warszawa",
+                444,     "11223344564", Gender::Female};
+  db.add(adam);
+  db.add(beata);
+  EXPECT_EQ(ErrorCode::RecordFound, db.searchByPesel("11223344567"));
+  EXPECT_EQ(ErrorCode::RecordNotFound, db.searchByPesel("11223344111"));
+}

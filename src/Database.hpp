@@ -16,6 +16,7 @@ class Database {
   void display() const;
   std::string show() const;
   ErrorCode searchByLastName(const std::string& lastName);
+  ErrorCode searchByPesel(const std::string& pesel);
 
  private:
   bool isStudentExist(const Student& student);
