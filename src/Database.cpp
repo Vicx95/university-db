@@ -58,6 +58,15 @@ void Database::sortByLastName() {
             });
 }
 
+ErrorCode Database::deleteByIndexNumber(int index) {
+  constexpr int expectedRemovedElements = 1;
+  auto removedElements = std::erase_if(students_, [&index](const auto& el) {
+    return index == el.getIndexNumber();
+  });
+  return removedElements == expectedRemovedElements ? ErrorCode::RecordDeleted
+                                                    : ErrorCode::RecordNotFound;
+}
+
 std::vector<Student> Database::getData() const {
   return students_;
 }

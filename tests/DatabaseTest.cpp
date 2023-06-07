@@ -78,7 +78,7 @@ TEST_F(DatabaseTest, SortingByPeselTest) {
   ASSERT_EQ(data, expectedOutput);
 }
 
-TEST_F(DatabaseTest, SortingByLastName) {
+TEST_F(DatabaseTest, SortingByLastNameTest) {
   std::vector<Student> expectedOutput{
       {"Konrad", "Berek", "ul.Norweska 50, 55-600, Wroclaw", 9876,
        "11245344564", Gender::Male},
@@ -89,6 +89,20 @@ TEST_F(DatabaseTest, SortingByLastName) {
       {"Iwona", "Syntezator", "ul.Krakowska 30, 55-500, Wroclaw", 9873,
        "76345344564", Gender::Female}};
   db.sortByLastName();
+  auto data = db.getData();
+  ASSERT_EQ(data, expectedOutput);
+}
+
+TEST_F(DatabaseTest, DeletingByIndexNumberTest) {
+  std::vector<Student> expectedOutput{
+      {"Adam", "Kowalski", "ul. Dobra 134, 00-200 Warszawa", 123456,
+       "11223344567", Gender::Male},
+      {"Iwona", "Syntezator", "ul.Krakowska 30, 55-500, Wroclaw", 9873,
+       "76345344564", Gender::Female}};
+
+  ASSERT_EQ(ErrorCode::RecordDeleted, db.deleteByIndexNumber(444));
+  ASSERT_EQ(ErrorCode::RecordDeleted, db.deleteByIndexNumber(9876));
+  ASSERT_EQ(ErrorCode::RecordNotFound, db.deleteByIndexNumber(455));
   auto data = db.getData();
   ASSERT_EQ(data, expectedOutput);
 }

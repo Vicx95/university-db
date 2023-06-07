@@ -7,7 +7,8 @@ enum class ErrorCode {
   Success,
   StudentAlreadyExist,
   RecordFound,
-  RecordNotFound
+  RecordNotFound,
+  RecordDeleted
 };
 
 class Database {
@@ -19,6 +20,7 @@ class Database {
   ErrorCode searchByPesel(const std::string& pesel);
   void sortByPesel();
   void sortByLastName();
+  ErrorCode deleteByIndexNumber(int index);
   std::vector<Student> getData() const;
 
  private:

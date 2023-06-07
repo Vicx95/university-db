@@ -16,6 +16,7 @@ class Student {
   std::string show() const;
   std::string getLastName() const;
   std::string getPesel() const;
+  int getIndexNumber() const;
 
   bool operator==(const Student& other) const;
 
