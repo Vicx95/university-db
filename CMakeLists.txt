@@ -17,6 +17,7 @@ set(SOURCES
     src/main.cpp
     src/Database.cpp
     src/Student.cpp
+    src/PeselValidator.cpp
     )
 
 set(HEADERS 
@@ -24,11 +25,12 @@ set(HEADERS
     )
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES})
-set(FLAGS -Wall -Wextra -Wconversion -Wpedantic)
+set(FLAGS -Wall -Wextra -Wconversion -Wpedantic -g)
 target_compile_options(${PROJECT_NAME} PRIVATE ${FLAGS})
 
 enable_testing()
-set(UT-SOURCES 
+set(UT-SOURCES
+    tests/PeselValidatorTest.cpp
     tests/DatabaseTest.cpp
     src/Database.cpp
     src/Student.cpp
