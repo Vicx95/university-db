@@ -5,6 +5,8 @@
 struct DatabaseTest : ::testing::Test {
   Database db;
   Database emptyDb;
+  const std::filesystem::path tmpPath = std::filesystem::temp_directory_path();
+  const std::string dbDir = tmpPath.string() + "/db";
 
   void SetUp() override {
     Student adam{"Adam", "Kowalski",    "ul. Dobra 134, 00-200 Warszawa",
@@ -109,8 +111,6 @@ TEST_F(DatabaseTest, DeletingByIndexNumberTest) {
 }
 
 TEST_F(DatabaseTest, SavingWholeDatabaseToFile) {
-  const auto tmpPath = std::filesystem::temp_directory_path();
-  const auto dbDir = tmpPath.string() + "/db";
   std::filesystem::create_directory(dbDir);
   db.saveToFile(dbDir + "/db.json");
   Json expectedJson = db.getJsonData();
@@ -122,8 +122,6 @@ TEST_F(DatabaseTest, SavingWholeDatabaseToFile) {
 }
 
 TEST_F(DatabaseTest, ReadDatabaseFromFile) {
-  const auto tmpPath = std::filesystem::temp_directory_path();
-  const auto dbDir = tmpPath.string() + "/db";
   std::filesystem::create_directory(dbDir);
   db.saveToFile(dbDir + "/db.json");
 
@@ -132,4 +130,5 @@ TEST_F(DatabaseTest, ReadDatabaseFromFile) {
   auto expectedOutput = db.getData();
   auto actualOutput = emptyDb.getData();
   ASSERT_EQ(actualOutput, expectedOutput);
+  std::filesystem::remove_all(dbDir);
 }
