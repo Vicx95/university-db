@@ -1,5 +1,6 @@
 #pragma once
 
+#include <filesystem>
 #include <vector>
 #include "Student.hpp"
 
@@ -22,6 +23,9 @@ class Database {
   void sortByLastName();
   ErrorCode deleteByIndexNumber(int index);
   std::vector<Student> getData() const;
+  Json getJsonData() const;
+  void saveToFile(const std::string& fileName);
+  void readFromFile(const std::string& fileName);
 
  private:
   bool isStudentExist(const Student& student);

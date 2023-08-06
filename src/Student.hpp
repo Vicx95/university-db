@@ -1,9 +1,12 @@
 #pragma once
 #include <string>
+#include "../external/json.hpp"
 
 enum class Gender { Male, Female };
 
 std::string convertGenderToString(const Gender& gender);
+Gender convertStringToGender(const std::string& gender);
+using Json = nlohmann::json;
 
 class Student {
  public:
@@ -17,7 +20,8 @@ class Student {
   std::string getLastName() const;
   std::string getPesel() const;
   int getIndexNumber() const;
-
+  Json toJson() const;
+  static Student fromJson(const Json& data);
   bool operator==(const Student& other) const;
 
  private:

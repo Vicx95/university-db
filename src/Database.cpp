@@ -1,5 +1,8 @@
 #include "Database.hpp"
+#include <fstream>
 #include <iostream>
+#include <iterator>
+#include <numeric>
 #include <ranges>
 
 ErrorCode Database::add(const Student& s) {
@@ -76,4 +79,26 @@ bool Database::isStudentExist(const Student& student) {
                  students_.end()
              ? true
              : false;
+}
+
+Json Database::getJsonData() const {
+  Json jsonData;
+  std::transform(students_.cbegin(), students_.cend(),
+                 std::back_inserter(jsonData),
+                 [](const Student& student) { return student.toJson(); });
+  return jsonData;
+}
+
+void Database::saveToFile(const std::string& fileName) {
+  std::ofstream file(fileName);
+  Json studentsJson = getJsonData();
+  file << studentsJson.dump(4);
+}
+
+void Database::readFromFile(const std::string& fileName) {
+  std::fstream file(fileName);
+  Json jsonData = Json::parse(file);
+  std::transform(jsonData.cbegin(), jsonData.cend(),
+                 std::back_inserter(students_),
+                 [](const auto& data) { return Student::fromJson(data); });
 }

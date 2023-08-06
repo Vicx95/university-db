@@ -31,6 +31,20 @@ int Student::getIndexNumber() const {
   return indexNumber_;
 }
 
+Json Student::toJson() const {
+  Json studentJson =
+      Json{{"name", name_},       {"lastName", lastName_},
+           {"address", address_}, {"indexNumber", indexNumber_},
+           {"pesel", pesel_},     {"gender", convertGenderToString(gender_)}};
+  return studentJson;
+}
+
+Student Student::fromJson(const Json& data) {
+  return Student{data["name"],    data["lastName"],
+                 data["address"], data["indexNumber"],
+                 data["pesel"],   convertStringToGender(data["gender"])};
+}
+
 bool Student::operator==(const Student& other) const {
   return name_ == other.name_ && lastName_ == other.lastName_ &&
          address_ == other.address_ && indexNumber_ == other.indexNumber_ &&
@@ -46,4 +60,11 @@ std::string convertGenderToString(const Gender& gender) {
     default:
       return "Unknown";
   }
+}
+
+Gender convertStringToGender(const std::string& gender) {
+  if (gender == "Male") {
+    return Gender::Male;
+  }
+  return Gender::Female;
 }

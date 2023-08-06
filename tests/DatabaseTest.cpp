@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <fstream>
 #include "../src/Database.hpp"
 
 struct DatabaseTest : ::testing::Test {
@@ -105,4 +106,30 @@ TEST_F(DatabaseTest, DeletingByIndexNumberTest) {
   ASSERT_EQ(ErrorCode::RecordNotFound, db.deleteByIndexNumber(455));
   auto data = db.getData();
   ASSERT_EQ(data, expectedOutput);
+}
+
+TEST_F(DatabaseTest, SavingWholeDatabaseToFile) {
+  const auto tmpPath = std::filesystem::temp_directory_path();
+  const auto dbDir = tmpPath.string() + "/db";
+  std::filesystem::create_directory(dbDir);
+  db.saveToFile(dbDir + "/db.json");
+  Json expectedJson = db.getJsonData();
+  std::ifstream inputFile(dbDir + "/db.json");
+  auto fileContent = Json::parse(inputFile);
+
+  ASSERT_EQ(fileContent, expectedJson);
+  std::filesystem::remove_all(dbDir);
+}
+
+TEST_F(DatabaseTest, ReadDatabaseFromFile) {
+  const auto tmpPath = std::filesystem::temp_directory_path();
+  const auto dbDir = tmpPath.string() + "/db";
+  std::filesystem::create_directory(dbDir);
+  db.saveToFile(dbDir + "/db.json");
+
+  emptyDb.readFromFile(dbDir + "/db.json");
+
+  auto expectedOutput = db.getData();
+  auto actualOutput = emptyDb.getData();
+  ASSERT_EQ(actualOutput, expectedOutput);
 }
