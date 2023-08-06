@@ -1,9 +1,16 @@
 #pragma once
-#include "Student.hpp"
+#include "../external/json.hpp"
 
-class PeselValidator {
+enum class Gender { Male, Female };
+using Json = nlohmann::json;
+
+class Pesel {
  public:
+  Pesel(std::string pesel);
   bool validate(const std::string& pesel, Gender gender);
+  std::string getPesel() const;
+  Json toJson() const;
+  static Pesel fromJson(const Json& data);
 
  private:
   bool isPeselLengthValid(const std::string& pesel);
@@ -11,4 +18,5 @@ class PeselValidator {
   bool isDayFromPeselValid(const std::string& pesel);
   bool isGenderValid(const std::string& pesel, Gender gender);
   bool isCheckSumValid(const std::string& pesel);
+  std::string pesel_;
 };

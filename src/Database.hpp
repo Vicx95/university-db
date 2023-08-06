@@ -18,7 +18,7 @@ class Database {
   void display() const;
   std::string show() const;
   ErrorCode searchByLastName(const std::string& lastName);
-  ErrorCode searchByPesel(const std::string& pesel);
+  ErrorCode searchByPesel(const Pesel& pesel);
   void sortByPesel();
   void sortByLastName();
   ErrorCode deleteByIndexNumber(int index);

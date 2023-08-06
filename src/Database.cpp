@@ -36,10 +36,10 @@ ErrorCode Database::searchByLastName(const std::string& lastName) {
   return ErrorCode::RecordNotFound;
 }
 
-ErrorCode Database::searchByPesel(const std::string& pesel) {
+ErrorCode Database::searchByPesel(const Pesel& pesel) {
   auto searchResult =
       std::find_if(students_.cbegin(), students_.cend(),
-                   [&pesel](const auto& el) { return pesel == el.getPesel(); });
+                   [&pesel](const auto& el) { return pesel.getPesel() == el.getPesel(); });
   if (searchResult != students_.cend()) {
     std::cout << searchResult->show() << '\n';
     return ErrorCode::RecordFound;

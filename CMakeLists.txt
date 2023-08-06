@@ -17,7 +17,7 @@ set(SOURCES
     src/main.cpp
     src/Database.cpp
     src/Student.cpp
-    src/PeselValidator.cpp
+    src/Pesel.cpp
     )
 
 set(HEADERS 
@@ -30,7 +30,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE ${FLAGS})
 
 enable_testing()
 set(UT-SOURCES
-    tests/PeselValidatorTest.cpp
+    tests/PeselTest.cpp
     tests/DatabaseTest.cpp
     src/Database.cpp
     src/Student.cpp

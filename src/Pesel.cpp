@@ -1,10 +1,12 @@
-#include "PeselValidator.hpp"
+#include "Pesel.hpp"
 #include <array>
 #include <iostream>
 #include <numeric>
 #include "Student.hpp"
 
-bool PeselValidator::validate(const std::string& pesel, Gender gender) {
+Pesel::Pesel(std::string pesel) : pesel_(pesel) {}
+
+bool Pesel::validate(const std::string& pesel, Gender gender) {
   if (!isPeselLengthValid(pesel)) {
     return false;
   }
@@ -24,12 +26,24 @@ bool PeselValidator::validate(const std::string& pesel, Gender gender) {
   return true;
 }
 
-bool PeselValidator::isPeselLengthValid(const std::string& pesel) {
+std::string Pesel::getPesel() const {
+  return pesel_;
+}
+
+Json Pesel::toJson() const {
+  return Json{{"pesel", pesel_}};
+}
+
+Pesel Pesel::fromJson(const Json& data){
+  return Pesel{data["pesel"]};
+}
+
+bool Pesel::isPeselLengthValid(const std::string& pesel) {
   constexpr size_t validPeselLength = 11;
   return pesel.length() != validPeselLength ? false : true;
 }
 
-bool PeselValidator::isMonthFromPeselValid(const std::string& pesel) {
+bool Pesel::isMonthFromPeselValid(const std::string& pesel) {
   auto month = std::stoi(pesel.substr(2, 2));
   constexpr std::array<int, 4> numbersAddedToMonth{80, 20, 40, 60};
   auto isMonthValid =
@@ -41,21 +55,21 @@ bool PeselValidator::isMonthFromPeselValid(const std::string& pesel) {
   return isMonthValid;
 }
 
-bool PeselValidator::isDayFromPeselValid(const std::string& pesel) {
+bool Pesel::isDayFromPeselValid(const std::string& pesel) {
   if (auto day = std::stoi(pesel.substr(4, 2)); day < 1 || day > 31) {
     return false;
   }
   return true;
 }
 
-bool PeselValidator::isGenderValid(const std::string& pesel, Gender gender) {
+bool Pesel::isGenderValid(const std::string& pesel, Gender gender) {
   constexpr size_t genderNumberPosition = 9;
   auto genderNumber = pesel[genderNumberPosition] - '0';
   return (gender == Gender::Male && genderNumber % 2 != 0) ||
          (gender == Gender::Female && genderNumber % 2 == 0);
 }
 
-bool PeselValidator::isCheckSumValid(const std::string& pesel) {
+bool Pesel::isCheckSumValid(const std::string& pesel) {
   constexpr std::array<size_t, 10> weights{1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
   std::array<size_t, 10> peselNumber{};
   for (size_t i = 0; i < pesel.size(); i++) {

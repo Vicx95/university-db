@@ -1,8 +1,6 @@
 #pragma once
 #include <string>
-#include "../external/json.hpp"
-
-enum class Gender { Male, Female };
+#include "Pesel.hpp"
 
 std::string convertGenderToString(const Gender& gender);
 Gender convertStringToGender(const std::string& gender);
@@ -14,7 +12,7 @@ class Student {
           std::string lastName,
           std::string address,
           int indexNumber,
-          std::string pesel,
+          Pesel pesel,
           Gender gender);
   std::string show() const;
   std::string getLastName() const;
@@ -29,6 +27,6 @@ class Student {
   std::string lastName_;
   std::string address_;
   int indexNumber_;
-  std::string pesel_;
+  Pesel pesel_;
   Gender gender_;
 };

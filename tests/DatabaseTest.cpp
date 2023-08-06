@@ -10,13 +10,13 @@ struct DatabaseTest : ::testing::Test {
 
   void SetUp() override {
     Student adam{"Adam", "Kowalski",    "ul. Dobra 134, 00-200 Warszawa",
-                 123456, "11223344567", Gender::Male};
+                 123456, Pesel("11223344567"), Gender::Male};
     Student beata{"Beata", "Kowalska",    "ul.Gwiazdzista 24, 10-200, Warszawa",
-                  444,     "11223344564", Gender::Female};
+                  444, Pesel("11223344564"), Gender::Female};
     Student konrad{"Konrad", "Berek",       "ul.Norweska 50, 55-600, Wroclaw",
-                   9876,     "11245344564", Gender::Male};
+                   9876, Pesel("11245344564"), Gender::Male};
     Student iwona{"Iwona", "Syntezator",  "ul.Krakowska 30, 55-500, Wroclaw",
-                  9873,    "76345344564", Gender::Female};
+                  9873, Pesel("76345344564"), Gender::Female};
 
     db.add(adam);
     db.add(beata);
@@ -51,7 +51,7 @@ TEST_F(DatabaseTest, DisplayNonEmptyDb) {
 
 TEST_F(DatabaseTest, AddOnlyNonDuplicatedStudentToDb) {
   Student jaroslaw{"Jaroslaw", "Nowakowski",  "ul.Wolna 24, 30-200, Warszawa",
-                   444,        "11223344569", Gender::Male};
+                   444,        Pesel("11223344569"), Gender::Male};
   EXPECT_EQ(ErrorCode::Success, db.add(jaroslaw));
   EXPECT_EQ(ErrorCode::StudentAlreadyExist, db.add(jaroslaw));
 }
@@ -62,20 +62,20 @@ TEST_F(DatabaseTest, SearchBySurnameTest) {
 }
 
 TEST_F(DatabaseTest, SearchByPeselTest) {
-  EXPECT_EQ(ErrorCode::RecordFound, db.searchByPesel("11223344567"));
-  EXPECT_EQ(ErrorCode::RecordNotFound, db.searchByPesel("11223344111"));
+  EXPECT_EQ(ErrorCode::RecordFound, db.searchByPesel(Pesel("11223344567")));
+  EXPECT_EQ(ErrorCode::RecordNotFound, db.searchByPesel(Pesel("11223344111")));
 }
 
 TEST_F(DatabaseTest, SortingByPeselTest) {
   std::vector<Student> expectedOutput{
       {"Beata", "Kowalska", "ul.Gwiazdzista 24, 10-200, Warszawa", 444,
-       "11223344564", Gender::Female},
+       Pesel("11223344564"), Gender::Female},
       {"Adam", "Kowalski", "ul. Dobra 134, 00-200 Warszawa", 123456,
-       "11223344567", Gender::Male},
+       Pesel("11223344567"), Gender::Male},
       {"Konrad", "Berek", "ul.Norweska 50, 55-600, Wroclaw", 9876,
-       "11245344564", Gender::Male},
+       Pesel("11245344564"), Gender::Male},
       {"Iwona", "Syntezator", "ul.Krakowska 30, 55-500, Wroclaw", 9873,
-       "76345344564", Gender::Female}};
+       Pesel("76345344564"), Gender::Female}};
   db.sortByPesel();
   auto data = db.getData();
   ASSERT_EQ(data, expectedOutput);
@@ -84,13 +84,13 @@ TEST_F(DatabaseTest, SortingByPeselTest) {
 TEST_F(DatabaseTest, SortingByLastNameTest) {
   std::vector<Student> expectedOutput{
       {"Konrad", "Berek", "ul.Norweska 50, 55-600, Wroclaw", 9876,
-       "11245344564", Gender::Male},
+       Pesel("11245344564"), Gender::Male},
       {"Beata", "Kowalska", "ul.Gwiazdzista 24, 10-200, Warszawa", 444,
-       "11223344564", Gender::Female},
+       Pesel("11223344564"), Gender::Female},
       {"Adam", "Kowalski", "ul. Dobra 134, 00-200 Warszawa", 123456,
-       "11223344567", Gender::Male},
+       Pesel("11223344567"), Gender::Male},
       {"Iwona", "Syntezator", "ul.Krakowska 30, 55-500, Wroclaw", 9873,
-       "76345344564", Gender::Female}};
+       Pesel("76345344564"), Gender::Female}};
   db.sortByLastName();
   auto data = db.getData();
   ASSERT_EQ(data, expectedOutput);
@@ -99,9 +99,9 @@ TEST_F(DatabaseTest, SortingByLastNameTest) {
 TEST_F(DatabaseTest, DeletingByIndexNumberTest) {
   std::vector<Student> expectedOutput{
       {"Adam", "Kowalski", "ul. Dobra 134, 00-200 Warszawa", 123456,
-       "11223344567", Gender::Male},
+       Pesel("11223344567"), Gender::Male},
       {"Iwona", "Syntezator", "ul.Krakowska 30, 55-500, Wroclaw", 9873,
-       "76345344564", Gender::Female}};
+       Pesel("76345344564"), Gender::Female}};
 
   ASSERT_EQ(ErrorCode::RecordDeleted, db.deleteByIndexNumber(444));
   ASSERT_EQ(ErrorCode::RecordDeleted, db.deleteByIndexNumber(9876));
